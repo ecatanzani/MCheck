@@ -1,25 +1,20 @@
-import os
-from tqdm import tqdm
-from ROOT import TClonesArray, TFile, TTree, gSystem, gROOT, AddressOf
-from ROOT import TH1D, TMath, TGraphAsymmErrors
-
-from stuff import eventProcess
+from ROOT import gSystem, gROOT
 
 def addToChain(opts,mcChain):
     
     ###Load DAMPE libs
 
     gSystem.Load("libDmpEvent.so")
-    gSystem.Load("libDmpEventFilter.so")
+    #gSystem.Load("libDmpEventFilter.so")
     
     gSystem.Load("libDmpKernel.so")
     gSystem.Load("libDmpService.so")
 
     ###Load DAMPE modules
 
-    from ROOT import DmpChain, DmpEvent, DmpFilterOrbit, DmpPsdBase, DmpCore
-    from ROOT import DmpSvcPsdEposCor, DmpVSvc   #DmpRecPsdManager
+    from ROOT import DmpChain,DmpEvent,DmpCore,DmpVSvc
     import DMPSW
+    import os
 
     for fIdx,file in enumerate(os.listdir(opts.input)):
         fNpath = str(opts.input) + "/" + str(file)
@@ -34,17 +29,19 @@ def readMC(opts,mcChain,nevents,eKinHisto,kStep):
     ###Load DAMPE libs
 
     gSystem.Load("libDmpEvent.so")
-    gSystem.Load("libDmpEventFilter.so")
+    #gSystem.Load("libDmpEventFilter.so")
     
     gSystem.Load("libDmpKernel.so")
     gSystem.Load("libDmpService.so")
 
     ###Load DAMPE modules
 
-    from ROOT import DmpChain, DmpEvent, DmpFilterOrbit, DmpPsdBase, DmpCore
-    from ROOT import DmpSvcPsdEposCor, DmpVSvc   #DmpRecPsdManager
+    from ROOT import DmpChain,DmpEvent,DmpVSvc
+    from ROOT import TH1D
     import DMPSW
-    
+    from tqdm import tqdm
+    from stuff import eventProcess
+
     if opts.verbose:
         print("Reading TChain data ...")
         if opts.debug:
