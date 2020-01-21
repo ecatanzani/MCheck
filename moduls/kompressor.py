@@ -1,29 +1,24 @@
 import sys
 
 ### Load ROOT modules
-from ROOT import TClonesArray, TFile, TTree, gSystem, gROOT, AddressOf
-from ROOT import TH1D, TMath, TGraphAsymmErrors
+from ROOT import TFile, TH1D,TTree,gROOT,gSystem
 
 # Import TTree branching module
 from inspectData import readMC,addToChain
 
 def analyzeMC(opts):
     
-    ###Load DAMPE libs
-
+    # Load DAMPE libs
     gSystem.Load("libDmpEvent.so")
-    gSystem.Load("libDmpEventFilter.so")
-    
     gSystem.Load("libDmpKernel.so")
     gSystem.Load("libDmpService.so")
 
-    ###Load DAMPE modules
+    # Load DAMPE modules
+    from ROOT import DmpChain
 
-    from ROOT import DmpChain, DmpEvent, DmpFilterOrbit, DmpPsdBase, DmpCore
-    from ROOT import DmpSvcPsdEposCor, DmpVSvc   #DmpRecPsdManager
-    import DMPSW
-
+    # Set ROOT verbosity
     gROOT.SetBatch(True)
+    gROOT.ProcessLine("gErrorIgnoreLevel = %i;"%opts.verbose)
 
     # Create output TFile
     outFile = TFile(opts.output,"RECREATE")
@@ -35,11 +30,8 @@ def analyzeMC(opts):
     nBins = 10000
     xLow = 0
     xUp = 200000
-
     eKinHisto = TH1D("eKinHisto","MC Trye Kinetic Energy",nBins,xLow,xUp)
     
-    ####### Reading input files
-
     #Creating DAMPE chain for input files
     dmpch = DmpChain("CollectionTree")
 
