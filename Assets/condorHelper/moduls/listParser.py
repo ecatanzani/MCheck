@@ -8,7 +8,7 @@ def parseInputList(opts):
     listIdx = 0
     dataList = []
     for idx, fileName in enumerate(inputList):
-        dataList.append(fileName)
+        dataList.append(fileName.rstrip('\n'))
         if len(dataList) == opts.fileNumber:
             writeListToFile(opts, dataList, outDir, listIdx)
             dataList.clear()
