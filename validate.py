@@ -8,7 +8,7 @@ start=datetime.now()
 
 def main(args=None):
     ### Parsing options
-    parser = ArgumentParser(usage="Usage: %(prog)s [options]", description="nTuple to TTree converter")
+    parser = ArgumentParser(usage="Usage: %(prog)s [options]", description="MonteCarlo Analyzer")
     
     parser.add_argument("-i","--input", type=str, dest='input', help='MC ROOT input directory')
     parser.add_argument("-l","--list", type=str, dest='list', help='MC ROOT input file list')
