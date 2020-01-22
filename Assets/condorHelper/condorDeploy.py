@@ -22,6 +22,7 @@ def main(args=None):
     # Load parsing functions
     sys.path.append("moduls")
     from dirParser import parseInputDir
+    from listParser import parseInputList
 
     if opts.input:
         parseInputDir(opts)
