@@ -17,4 +17,4 @@ def parseInputList(opts):
         writeListToFile(opts, dataList, outDir, listIdx)
         dataList.clear()
         listIdx += 1
-    return listIdx
+    return listIdx, outDir
