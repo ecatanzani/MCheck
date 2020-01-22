@@ -31,7 +31,7 @@ def parseInputDir(opts, noSplitList=False, singleListOutput=None):
                 dataList.clear()
                 listIdx += 1
             os.chdir(homeWD)
-            return listIdx
+            return listIdx, outDir
         else:
             homeWD = os.getcwd()
             os.chdir(opts.input)
