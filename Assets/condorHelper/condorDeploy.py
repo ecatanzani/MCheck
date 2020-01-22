@@ -23,11 +23,15 @@ def main(args=None):
     sys.path.append("moduls")
     from dirParser import parseInputDir
     from listParser import parseInputList
+    from createCondorDirs import createJobsDirs
 
     if opts.input:
-        parseInputDir(opts)
+        nDirs, outDir = parseInputDir(opts)
     if opts.list:
-        parseInputList(opts)
+        nDirs, outDir = parseInputList(opts)
+
+    # Create HTCondor output dirs
+    createJobsDirs(opts, nDirs, outDir)
 
 
 if __name__ == '__main__':
