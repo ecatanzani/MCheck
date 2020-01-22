@@ -166,3 +166,4 @@ dmypy.json
 # Data local folder
 data
 *.root
+*.txt   
