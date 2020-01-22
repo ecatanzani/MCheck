@@ -24,6 +24,10 @@ def parseInputDir(opts, noSplitList=False, singleListOutput=None):
                     writeListToFile(opts, dataList, outDir, listIdx)
                     dataList.clear()
                     listIdx += 1
+            if len(dataList) is not 0:
+                writeListToFile(opts, dataList, outDir, listIdx)
+                dataList.clear()
+                listIdx += 1
         else:
             homeWD = os.getcwd()
             os.chdir(opts.input)
