@@ -19,17 +19,19 @@ def parseInputDir(opts, noSplitList=False, singleListOutput=None):
             listIdx = 0
             dataList = []
             for idx, fileName in enumerate(os.listdir(dataWD)):
-                completeFileName = dataWD + "/" + fileName
-                dataList.append(completeFileName)
-                if len(dataList) == opts.fileNumber:
-                    writeListToFile(opts, dataList, outDir, listIdx)
-                    dataList.clear()
-                    listIdx += 1
+                if not fileName.startswith('.'):
+                    completeFileName = dataWD + "/" + fileName
+                    dataList.append(completeFileName)
+                    if len(dataList) == opts.fileNumber:
+                        writeListToFile(opts, dataList, outDir, listIdx)
+                        dataList.clear()
+                        listIdx += 1
             if len(dataList) is not 0:
                 writeListToFile(opts, dataList, outDir, listIdx)
                 dataList.clear()
                 listIdx += 1
             os.chdir(homeWD)
+            return listIdx
         else:
             homeWD = os.getcwd()
             os.chdir(opts.input)
