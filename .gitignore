@@ -167,3 +167,4 @@ dmypy.json
 data
 *.root
 *.txt   
+*.sub
