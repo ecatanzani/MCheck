@@ -1,10 +1,11 @@
 import sys
 
 ### Load ROOT modules
-from ROOT import TFile, TH1D,TTree,gROOT,gSystem
+from ROOT import TFile,TH1D,gROOT,gSystem
 
 # Import TTree branching module
 from inspectData import readMC,addToChain
+from stuff import createOutROOTFile
 
 def analyzeMC(opts):
     
@@ -21,10 +22,7 @@ def analyzeMC(opts):
     gROOT.ProcessLine("gErrorIgnoreLevel = %i;"%opts.verbose)
 
     # Create output TFile
-    outFile = TFile(opts.output,"RECREATE")
-    if outFile.IsZombie():
-        print('Error writing output file {}'.format(opts.output))
-        sys.exit()
+    outFile = createOutROOTFile(opts)
     
     # Create eKin energy histo
     nBins = 10000
@@ -35,14 +33,10 @@ def analyzeMC(opts):
     #Creating DAMPE chain for input files
     dmpch = DmpChain("CollectionTree")
 
-    # Add ROOT files to the chain
-    addToChain(opts,dmpch)
-
-    nevents = dmpch.GetEntries()
-    if opts.verbose:
-        print('Collected {} events ...'.format(nevents))
+    # Add ROOT files to the chain and get total events
+    nevents = addToChain(opts,dmpch)
     
-    nevents = dmpch.GetEntries()
+    # Analyze events
     readMC(opts,dmpch,nevents,eKinHisto,kStep=1e+4)
 
     # Write histo to TFile
