@@ -13,6 +13,7 @@ def parseInputDir(opts, noSplitList=False, singleListOutput=None):
         raise
     else:
         if not noSplitList:
+            homeWD = os.getcwd()
             os.chdir(opts.input)
             dataWD = os.getcwd()
             listIdx = 0
@@ -28,6 +29,7 @@ def parseInputDir(opts, noSplitList=False, singleListOutput=None):
                 writeListToFile(opts, dataList, outDir, listIdx)
                 dataList.clear()
                 listIdx += 1
+            os.chdir(homeWD)
         else:
             homeWD = os.getcwd()
             os.chdir(opts.input)
