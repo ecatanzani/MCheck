@@ -21,19 +21,20 @@ def addToChain(opts, mcChain):
         if opts.verbose:
             print('Reading input ROOT files from dir: {}'.format(opts.input))
         for fIdx, file in enumerate(os.listdir(opts.input)):
-            fNpath = str(opts.input) + "/" + str(file)
-            DMPSW.IOSvc.Set("InData/Read" if fIdx ==
-                            0 else "InData/ReadMore", fNpath)
-            if os.path.isfile(fNpath):
-                mcChain.Add(fNpath)
-                if opts.verbose:
-                    print('Adding {} to the chain...'.format(fNpath))
-            else:
-                if firstSkipped:
-                    skFile = skippedOutFile(opts)
-                    firstSkipped = False
+            if not file.startswith('.'):
+                fNpath = str(opts.input) + "/" + str(file)
+                DMPSW.IOSvc.Set("InData/Read" if fIdx ==
+                                0 else "InData/ReadMore", fNpath)
+                if os.path.isfile(fNpath):
+                    mcChain.Add(fNpath)
+                    if opts.verbose:
+                        print('Adding {} to the chain...'.format(fNpath))
                 else:
-                    writeSkipped(skFile, fNpath, opts)
+                    if firstSkipped:
+                        skFile = skippedOutFile(opts)
+                        firstSkipped = False
+                    else:
+                        writeSkipped(skFile, fNpath, opts)
 
     else:
         if opts.verbose:
