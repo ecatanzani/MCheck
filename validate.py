@@ -1,10 +1,16 @@
 #!/usr/bin/env python
-
+import os
 import sys
 from datetime import datetime
 from argparse import ArgumentParser
 
 start=datetime.now()
+
+def getModulsPath():
+    modulsAbsPath = os.getcwd()
+    modulsAbsPath, sep, tail = modulsAbsPath.partition('/Assets')
+    modulsAbsPath += "/moduls" 
+    return modulsAbsPath
 
 def main(args=None):
     ### Parsing options
@@ -18,9 +24,9 @@ def main(args=None):
     parser.add_argument("-d","--debug", type=int, dest='debug', const=1000, nargs='?', help='activate debug mode - const value 1000 events')
 
     opts = parser.parse_args(args)
-    
+
     #Load analysis functions
-    sys.path.append("moduls")
+    sys.path.append(getModulsPath())
     from kompressor import analyzeMC
     from stuff import createOutDir
     
