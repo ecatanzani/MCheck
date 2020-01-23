@@ -29,3 +29,5 @@ def createJobsDirs(opts, nDirs, outDir):
 
     # Create HTCondor sub file
     createSubFiles(opts, condorDirs)
+
+    return condorDirs
