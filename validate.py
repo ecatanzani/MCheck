@@ -6,12 +6,6 @@ from argparse import ArgumentParser
 
 start=datetime.now()
 
-def getModulsPath():
-    modulsAbsPath = os.getcwd()
-    modulsAbsPath, sep, tail = modulsAbsPath.partition('/Assets')
-    modulsAbsPath += "/moduls" 
-    return modulsAbsPath
-
 def main(args=None):
     ### Parsing options
     parser = ArgumentParser(usage="Usage: %(prog)s [options]", description="MonteCarlo Analyzer")
@@ -22,11 +16,16 @@ def main(args=None):
     parser.add_argument("-o","--output", type=str, dest='output', help='name of output root TFile')
     parser.add_argument("-v","--verbose", dest='verbose', default=False, action='store_true', help='run in high verbosity mode')
     parser.add_argument("-d","--debug", type=int, dest='debug', const=1000, nargs='?', help='activate debug mode - const value 1000 events')
+    parser.add_argument("-w","--wdir", type=str, dest='workingDir', help='Home WD - HTCondor system')
 
     opts = parser.parse_args(args)
 
     #Load analysis functions
-    sys.path.append(getModulsPath())
+    if not opts.workingDir:
+        sys.path.append("moduls")
+    else:
+        modAbsPath = opts.workingDir + "/moduls"
+        sys.path.append(modAbsPath)
     from kompressor import analyzeMC
     from stuff import createOutDir
     
