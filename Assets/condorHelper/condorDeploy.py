@@ -24,6 +24,7 @@ def main(args=None):
     from dirParser import parseInputDir
     from listParser import parseInputList
     from createCondorDirs import createJobsDirs
+    from HTCSubmit import submitJobs
 
     if opts.input:
         nDirs, outDir = parseInputDir(opts)
@@ -31,7 +32,10 @@ def main(args=None):
         nDirs, outDir = parseInputList(opts)
 
     # Create HTCondor output dirs
-    createJobsDirs(opts, nDirs, outDir)
+    condorDirs = createJobsDirs(opts, nDirs, outDir)
+
+    # Submit condor jobs
+    submitJobs(opts, condorDirs)
 
 
 if __name__ == '__main__':
