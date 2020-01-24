@@ -36,7 +36,8 @@ def parseInputDir(opts, noSplitList=False, singleListOutput=None):
             homeWD = os.getcwd()
             os.chdir(opts.input)
             dataWD = os.getcwd()
-            relDataList = os.listdir(dataWD)
+            relDataList = [iFile for iFile in os.listdir(
+                dataWD) if not iFile.startswith('.')]
             relDataList = relDataList[:opts.fileNumber]
             prefix = dataWD + "/"
             os.chdir(homeWD)
