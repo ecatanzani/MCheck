@@ -1,5 +1,5 @@
 import os
-from subFileWriter import createSubFiles
+from condorFileWriter import createCondorFiles
 
 
 def createJobsDirs(opts, nDirs, outDir):
@@ -28,6 +28,6 @@ def createJobsDirs(opts, nDirs, outDir):
     os.chdir(homeWD)
 
     # Create HTCondor sub file
-    createSubFiles(opts, condorDirs)
+    createCondorFiles(opts, condorDirs)
 
     return condorDirs
