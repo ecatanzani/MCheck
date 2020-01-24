@@ -168,3 +168,4 @@ data
 *.root
 *.txt   
 *.sub
+*.sh
