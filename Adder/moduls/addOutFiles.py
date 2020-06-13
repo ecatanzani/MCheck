@@ -11,7 +11,7 @@ def compute_final_histos(condor_dir_list, opts):
         tmp_dir += "/outFiles"
         tmp_dir_list = os.listdir(tmp_dir)
         for elm in tmp_dir_list:
-            if elm.startswith("MCheck_")
+            if elm.startswith("MCheck_"):
                 rFile_path = tmp_dir + "/" + elm
 
         # Open ROOT output file
